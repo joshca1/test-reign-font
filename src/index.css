@@ -1,13 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+
+html, body, #root, .App{
+  height: 100%;
+  width: 100%;
+  background-color: #fcfcfc;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.header-hacker{
+  box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 0.12);
+  background-image: linear-gradient(to bottom, #ececec -32%, #fff 124%);
+  height: 114px;
+  display: flex;
+  align-items: center;
+}
+.header-hacker span{
+  font-family: 'Libre Baskerville', serif;
+  font-size: 28px;
+  color: #3b3b3b;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  margin: 0 150px;
+}
+
+@media only screen and (max-width: 600px) {
+  .header-hacker span{
+    margin: 0 20px;
+  }
 }

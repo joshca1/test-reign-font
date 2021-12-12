@@ -4,7 +4,9 @@ interface Props {
   }
 
 const Header: React.FC<Props> = ({ title }) => {
-return <div>{title}</div>;
+return <header className="header-hacker">
+    <span>{title}</span>
+</header>;
 };
 
  export default Header;
