@@ -1,0 +1,22 @@
+.post-switch {
+  display: flex;
+  justify-content: center;
+}
+.post-switch-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 98px;
+  height: 31px;
+  border-radius: 2px;
+  border: solid 1px #d6d6d6;
+  cursor: pointer;
+}
+.post-switch :first-child {
+  border-right: none;
+  margin-right: -1px;
+}
+.active {
+  border: solid 1px #1797ff;
+  color: #1797ff;
+}
