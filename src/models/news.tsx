@@ -1,4 +1,4 @@
-export type NewsTopics = "angular" | "react" | "vue";
+export type NewsTopics = "all" | "angular" | "react" | "vue";
 
 export interface FetchPostOptions {
   topic: NewsTopics;

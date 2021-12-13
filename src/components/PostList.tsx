@@ -10,7 +10,7 @@ interface Post {
 }
 
 interface Props {
-    posts: any
+    posts: any;
 }
 const addPostToFav = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -19,6 +19,7 @@ const addPostToFav = (e: React.MouseEvent<HTMLElement>) => {
 }
 
 const postList: React.FC<Props> = ({ posts }) => {
+    
     return (
         <div className="post-list">
             {posts.map((post: Post) => {

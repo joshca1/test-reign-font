@@ -4,7 +4,7 @@ import { fetchPosts } from "../services/posts";
 
 export const useFetchPosts = (filters: FetchPostOptions) => {
   const [posts, setPosts] = useState();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -18,8 +18,10 @@ export const useFetchPosts = (filters: FetchPostOptions) => {
         setIsLoading(false);
       }
     };
-
+      
+    if (filters.topic !== 'all')
     loadPosts();
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.topic, filters.page]);
 

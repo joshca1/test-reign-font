@@ -12,21 +12,20 @@ const LoadingComponent = () => {
 };
 
 function App() {
-  const [newsType, setNewsType] = useState<NewsTopics>("angular");
+  const [newsTopic, setNewsTopic] = useState<NewsTopics>("all");
   const [numPage, setNumPage] = useState<number>(0);
 
   const { posts, isLoading } = useFetchPosts({
-    topic: newsType,
+    topic: newsTopic,
     page: numPage,
   });
  
-  const changeTopic = (topic: string) => {
-    console.log("changing topic to: " + topic);
-    /* fetch(`https://hn.algolia.com/api/v1/search_by_date?query=${topic}&page=0`)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-      }) */
+  const changeTopic = (option: any) => {
+    setNewsTopic(option.value);
+  }
+
+  const changePage = (option: any) => {
+    setNumPage(option.value);
   }
 
   return (
@@ -35,7 +34,7 @@ function App() {
       <div className="post-content">
         <PostSwitch />
         <PostSelector changeTopic={ changeTopic } topic="angular"/>
-        {isLoading ? <LoadingComponent /> : <PostList posts={posts} />}
+        {isLoading ? <LoadingComponent /> : posts ? <PostList posts={posts} /> : ""}
       </div>
     </div>
   );

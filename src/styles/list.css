@@ -4,7 +4,7 @@
   grid-auto-flow: row;
   grid-template-columns: 50% 50%;
   justify-content: center;
-  margin: 150px 38px;
+  margin: 38px 38px;
 }
 
 .post-list .post-item-container:nth-child(odd) {
@@ -84,8 +84,3 @@
     grid-template-columns: 1fr;
   }
 }
-/* @media only screen and (min-width: 1200px) {
-  .post-list {
-    margin: 150px auto;
-  }
-} */
