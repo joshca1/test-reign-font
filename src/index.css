@@ -42,6 +42,15 @@ path {
   margin: 70px 0;
 }
 
+.loading-container {
+  font-size: 23px;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 @media only screen and (max-width: 600px) {
   .header-hacker span {
     margin: 0 20px;
