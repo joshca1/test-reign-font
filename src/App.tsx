@@ -1,19 +1,28 @@
-import { useState, } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import PostSwitch from './components/PostSwitch';
 import PostList from './components/PostList';
 import PostSelector from './components/PostSelector';
 import { useFetchPosts } from "./hooks/useFetchPosts";
-import { NewsTopics } from "./models/news";
+import { NewsTopics, PostViewMode } from "./models/news";
 
 
 const LoadingComponent = () => {
   return <div className="loading-container"> Loading... </div>;
 };
 
+
 function App() {
-  const [newsTopic, setNewsTopic] = useState<NewsTopics>("all");
+  const [newsTopic, setNewsTopic] = useState<NewsTopics>("none");
   const [numPage, setNumPage] = useState<number>(0);
+  const [viewMode, setViewMode] = useState<PostViewMode>('all');
+
+  useEffect(() => {
+    const topic = localStorage.getItem("topic");
+    if(topic){
+      setNewsTopic(topic as NewsTopics);
+    }
+  }, []);
 
   const { posts, isLoading } = useFetchPosts({
     topic: newsTopic,
@@ -21,6 +30,7 @@ function App() {
   });
  
   const changeTopic = (option: any) => {
+    localStorage.setItem("topic", option.value)
     setNewsTopic(option.value);
   }
 
@@ -28,12 +38,16 @@ function App() {
     setNumPage(option.value);
   }
 
+  const changeViewMode = (type: PostViewMode) => {
+    setViewMode(type)
+  }
+
   return (
     <div className="App">
       <Header title="HACKER NEWS" />
       <div className="post-content">
-        <PostSwitch />
-        <PostSelector changeTopic={ changeTopic } topic="angular"/>
+        <PostSwitch option={viewMode} changeViewMode = { changeViewMode }/>
+        <PostSelector changeTopic={ changeTopic } loadValue={newsTopic}/>
         {isLoading ? <LoadingComponent /> : posts ? <PostList posts={posts} /> : ""}
       </div>
     </div>

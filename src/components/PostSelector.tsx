@@ -1,10 +1,12 @@
+import { useState, useEffect } from 'react';
 import '../styles/selector.css';
 import Select, { components } from 'react-select'
 
 interface Selection {
-     topic: string;
+     loadValue: string;
      changeTopic: (option:any) => void;
 }
+
 
 const options = [
      { value: '', label: 'Select your news', icon: null, isDisabled: true },
@@ -53,9 +55,19 @@ const customStyles = {
 
 };
 
-const PostSelector: React.FC<Selection> = ({ topic, changeTopic }) => {
+const PostSelector: React.FC<Selection> = ({ loadValue, changeTopic }) => {
+     const [defValue, setDefaultValue] = useState(options[0]);
+
+     useEffect(() => {
+          let i = 0;
+          if(loadValue !== 'none'){
+               i = options.findIndex(option => option.value === loadValue) ;
+          }
+          setDefaultValue(options[i]);
+     }, [loadValue]);
+     
      return <div className="topic-container">
-          <Select onChange={(option)=> changeTopic(option)} styles={customStyles} defaultValue={options[0]} options={options} components={{ Option: IconOption, IndicatorSeparator: () => null }} />
+          <Select onChange={(option)=> changeTopic(option)} styles={customStyles} value={defValue} defaultValue={ options[0] } options={options} components={{ Option: IconOption, IndicatorSeparator: () => null }} />
           <div></div>
      </div>;
 };

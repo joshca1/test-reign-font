@@ -9,6 +9,5 @@ export const fetchPosts = async (filters: FetchPostOptions) => {
   );
 
   const data = await response.json();
-    console.log("Fetching posts", data)
   return data;
 };
