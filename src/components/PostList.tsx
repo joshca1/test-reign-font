@@ -1,5 +1,6 @@
 import '../styles/list.css';
 import FavIcon from './FavIcon'
+import moment from 'moment';
 interface Post {
     story_id: number;
     author: string;
@@ -15,7 +16,6 @@ interface Props {
 }
 
 const addPostToFav = (e: React.MouseEvent<HTMLElement>, post:Post) => {
-    console.log(post)
     e.preventDefault();
     let id = e.currentTarget.dataset.id;
     
@@ -48,6 +48,10 @@ const storePostLocally = (post: any, id:any) => {
     }
 }
 
+const formatDate = (date: Date) => {
+    return moment(date).fromNow();
+}
+
 const postList: React.FC<Props> = ({ posts }) => {
     
     return (
@@ -57,12 +61,12 @@ const postList: React.FC<Props> = ({ posts }) => {
                     <div className="post-item-container" key={`${post.story_id}-${post.created_at_i}`}>
                         <a className="post-item" href={post.story_url} rel="noreferrer" target="_blank">
                             <div className="post-item-info">
-                                <p className="post-date"> <img src="clock.svg" alt="clock icon" />{post.created_at} by {post.author}</p>
+                                <p className="post-date"> <img src="clock.svg" alt="clock icon" />{formatDate(post.created_at)} by {post.author}</p>
                                 <h2 className="post-item-title">{post.story_title}</h2>
                             </div>
                             <div className="post-item-fav">
                                 <div data-id={`${post.story_id}-${post.created_at_i}`} onClick={(event)=>addPostToFav(event, post)}>
-                                    <FavIcon  active={true}/>
+                                    <FavIcon  active={post.fav ? true : false}/>
                                 </div>
                             </div>
                         </a>
