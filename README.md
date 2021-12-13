@@ -33,6 +33,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 This app uses the following libraries:
 React select used to change news topics (<https://react-select.com/home>)
+Date Library used to display date and time (<https://momentjs.com/>)
 
 ### `Local storage`
 
