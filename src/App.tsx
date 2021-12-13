@@ -11,11 +11,15 @@ const LoadingComponent = () => {
   return <div className="loading-container"> Loading... </div>;
 };
 
+const getFavPosts = () =>{
+  return localStorage.getItem("favposts") ? JSON.parse(localStorage.getItem("favposts") || "[]") : [];
+}
 
 function App() {
   const [newsTopic, setNewsTopic] = useState<NewsTopics>("none");
   const [numPage, setNumPage] = useState<number>(0);
   const [viewMode, setViewMode] = useState<PostViewMode>('all');
+  const [favPosts, setFavPosts] = useState<string[]>(getFavPosts);
 
   useEffect(() => {
     const topic = localStorage.getItem("topic");
@@ -39,16 +43,21 @@ function App() {
   }
 
   const changeViewMode = (type: PostViewMode) => {
+    setFavPosts(getFavPosts)
     setViewMode(type)
+  }
+  const reloadPosts = () => {
+    console.log("relading post");
+    setFavPosts(getFavPosts)
   }
 
   return (
     <div className="App">
       <Header title="HACKER NEWS" />
       <div className="post-content">
-        <PostSwitch option={viewMode} changeViewMode = { changeViewMode }/>
-        <PostSelector changeTopic={ changeTopic } loadValue={newsTopic}/>
-        {isLoading ? <LoadingComponent /> : posts ? <PostList posts={posts} /> : ""}
+        <PostSwitch option={viewMode} changeViewMode = { changeViewMode } />
+        {viewMode==='all' && <PostSelector changeTopic={ changeTopic } loadValue={newsTopic}/>}
+        {isLoading ? <LoadingComponent /> : posts ? <PostList reloadPosts={reloadPosts} posts={viewMode === 'all' ? posts : favPosts} /> : ""}
       </div>
     </div>
   );

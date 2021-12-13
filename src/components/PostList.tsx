@@ -13,6 +13,7 @@ interface Post {
 
 interface Props {
     posts: any;
+    reloadPosts: () => void;
 }
 
 const addPostToFav = (e: React.MouseEvent<HTMLElement>, post:Post) => {
@@ -21,11 +22,13 @@ const addPostToFav = (e: React.MouseEvent<HTMLElement>, post:Post) => {
     
     let postToStore = {
         id: id,
+        story_id: post.story_id,
         created_at: post.created_at,
         story_title: post.story_title,
         story_url: post.story_url,
         author: post.author,
         created_at_i: post.created_at_i,
+        fav: true
     }
     storePostLocally(postToStore, id)
 }
@@ -52,8 +55,11 @@ const formatDate = (date: Date) => {
     return moment(date).fromNow();
 }
 
-const postList: React.FC<Props> = ({ posts }) => {
-    
+const postList: React.FC<Props> = ({ posts, reloadPosts }) => {
+    const handleAddPost = (event:any, post:any) => {
+        addPostToFav(event, post);
+        reloadPosts()
+    } 
     return (
         <div className="post-list">
             {posts.map((post: Post) => {
@@ -65,7 +71,7 @@ const postList: React.FC<Props> = ({ posts }) => {
                                 <h2 className="post-item-title">{post.story_title}</h2>
                             </div>
                             <div className="post-item-fav">
-                                <div data-id={`${post.story_id}-${post.created_at_i}`} onClick={(event)=>addPostToFav(event, post)}>
+                                <div data-id={`${post.story_id}-${post.created_at_i}`} onClick={(event)=>handleAddPost(event, post)}>
                                     <FavIcon  active={post.fav ? true : false}/>
                                 </div>
                             </div>
