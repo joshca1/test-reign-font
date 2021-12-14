@@ -4,8 +4,8 @@ import PostSwitch from './components/PostSwitch';
 import PostList from './components/PostList';
 import PostSelector from './components/PostSelector';
 import { useFetchPosts } from "./hooks/useFetchPosts";
-import { NewsTopics, PostViewMode } from "./models/news";
-
+import { NewsTopics, PostViewMode, Post } from "./models/news";
+import { isFavPostStored } from './helper/post'
 
 const LoadingComponent = () => {
   return <div className="loading-container"> Loading... </div>;
@@ -28,7 +28,7 @@ function App() {
     }
   }, []);
 
-  const { posts, isLoading } = useFetchPosts({
+  const { posts, isLoading, setPosts } = useFetchPosts({
     topic: newsTopic,
     page: numPage,
   });
@@ -47,8 +47,12 @@ function App() {
     setViewMode(type)
   }
   const reloadPosts = () => {
-    console.log("relading post");
-    setFavPosts(getFavPosts)
+      let postWithFav = posts.map(post => {
+        post.fav = isFavPostStored(post);
+        return post;
+      })
+      setPosts(postWithFav);
+      setFavPosts(getFavPosts)
   }
 
   return (
