@@ -1,20 +1,11 @@
 import { useEffect, useState } from "react";
 import { FetchPostOptions } from "../models/news";
 import { fetchPosts } from "../services/posts";
-
-const isFavPostStored = (post:any) => {
-    const localPost = localStorage.getItem("favposts");
-    let postID = `${post.story_id}-${post.created_at_i}`;
-    if (localPost) {
-        const localPosts = JSON.parse(localPost);
-        return localPosts.find((x: any) => x.id === postID);
-    }
-    return false;
-}
+import { filterValidPost } from '../helper/post'
 
 
 export const useFetchPosts = (filters: FetchPostOptions) => {
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -23,11 +14,7 @@ export const useFetchPosts = (filters: FetchPostOptions) => {
             setIsLoading(true);
             const { hits } = await fetchPosts(filters);
            
-            let filteredPost = hits.filter((post:any) => {
-                return post.author && post.story_title && post.story_url && post.created_at;
-            }).map((post:any) => {
-                return {...post, fav:isFavPostStored(post)};
-            });
+            let filteredPost = filterValidPost(hits)
             
             setPosts(filteredPost);
         } catch (error) {
@@ -45,5 +32,6 @@ export const useFetchPosts = (filters: FetchPostOptions) => {
   return {
     posts,
     isLoading,
+    setPosts
   };
 };
