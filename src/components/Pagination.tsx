@@ -11,19 +11,27 @@ type Props = {
 const Pagination: React.FC<Props> = (props: Props) => {
   const { page, pageCount, onPageChange } = props;
 
+  const previousLabel = () => {
+    return (
+      <div className="pagination-item">
+        <span> {"<"} </span>
+      </div>
+    );
+  };
+
+  const nextLabel = () => {
+    return (
+      <div className="pagination-item">
+        <span> {">"} </span>
+      </div>
+    );
+  };
+
   return (
     <div data-testid="pagination" className="pagination">
       <ReactPaginate
-        previousLabel={
-          <div className="pagination-item">
-            <span> {"<"} </span>
-          </div>
-        }
-        nextLabel={
-          <div className="pagination-item">
-            <span> {">"} </span>
-          </div>
-        }
+        previousLabel={previousLabel()}
+        nextLabel={nextLabel()}
         breakLabel=""
         breakClassName="pagination-item"
         forcePage={page}

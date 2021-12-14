@@ -14,4 +14,3 @@ export interface Post {
   created_at_i: number;
   fav?: boolean;
 }
-
