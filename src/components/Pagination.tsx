@@ -29,20 +29,22 @@ const Pagination: React.FC<Props> = (props: Props) => {
 
   return (
     <div data-testid="pagination" className="pagination">
-      <ReactPaginate
-        previousLabel={previousLabel()}
-        nextLabel={nextLabel()}
-        breakLabel=""
-        breakClassName="pagination-item"
-        forcePage={page}
-        pageCount={pageCount}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        pageClassName="pagination-item"
-        onPageChange={onPageChange}
-        containerClassName="pagination"
-        activeClassName="pagination-item--active"
-      />
+      {pageCount > 1 && (
+        <ReactPaginate
+          previousLabel={previousLabel()}
+          nextLabel={nextLabel()}
+          breakLabel=""
+          breakClassName="pagination-item"
+          forcePage={page}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          pageClassName="pagination-item"
+          onPageChange={onPageChange}
+          containerClassName="pagination"
+          activeClassName="pagination-item--active"
+        />
+      )}
     </div>
   );
 };
