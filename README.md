@@ -34,8 +34,11 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 This app uses the following libraries:
 React select used to change news topics (<https://react-select.com/home>)
 Date Library used to display date and time (<https://momentjs.com/>)
+Date Library used to display date and time (<https://momentjs.com/>)
+React pagination used to manage page changes (<https://www.npmjs.com/package/react-paginate>)
 
 ### `Local storage`
 
 This app uses localstorage to store the user's favorite posts.\
 var used is named "favposts".
+var used to store selected topic "topic".
