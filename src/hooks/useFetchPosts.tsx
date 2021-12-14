@@ -3,17 +3,24 @@ import { FetchPostOptions } from "../models/news";
 import { fetchPosts } from "../services/posts";
 import { filterValidPost } from '../helper/post'
 
+interface Paginate {
+  nbPages: number;
+  hitsPerPage: number;
+  page: number;
+}
 
 export const useFetchPosts = (filters: FetchPostOptions) => {
   const [posts, setPosts] = useState<any[]>([]);
+  const [paginateData, setPaginateData] = useState<Paginate>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const loadPosts = async () => {
         try {
             setIsLoading(true);
-            const { hits } = await fetchPosts(filters);
-           
+            const data = await fetchPosts(filters);
+            setPaginateData(data);
+            const { hits } = data
             let filteredPost = filterValidPost(hits)
             
             setPosts(filteredPost);
@@ -31,6 +38,7 @@ export const useFetchPosts = (filters: FetchPostOptions) => {
 
   return {
     posts,
+    paginateData,
     isLoading,
     setPosts
   };

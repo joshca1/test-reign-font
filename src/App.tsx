@@ -4,8 +4,9 @@ import PostSwitch from './components/PostSwitch';
 import PostList from './components/PostList';
 import PostSelector from './components/PostSelector';
 import { useFetchPosts } from "./hooks/useFetchPosts";
-import { NewsTopics, PostViewMode, Post } from "./models/news";
+import { NewsTopics, PostViewMode } from "./models/news";
 import { isFavPostStored } from './helper/post'
+import Pagination from "./components/Pagination";
 
 const LoadingComponent = () => {
   return <div className="loading-container"> Loading... </div>;
@@ -28,7 +29,7 @@ function App() {
     }
   }, []);
 
-  const { posts, isLoading, setPosts } = useFetchPosts({
+  const { posts, paginateData, isLoading, setPosts } = useFetchPosts({
     topic: newsTopic,
     page: numPage,
   });
@@ -38,9 +39,13 @@ function App() {
     setNewsTopic(option.value);
   }
 
-  const changePage = (option: any) => {
-    setNumPage(option.value);
-  }
+  const changePage = (selectedItem: { selected: number }) => {
+    const { selected } = selectedItem;
+
+    setNumPage(selected);
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const changeViewMode = (type: PostViewMode) => {
     setFavPosts(getFavPosts)
@@ -62,6 +67,11 @@ function App() {
         <PostSwitch option={viewMode} changeViewMode = { changeViewMode } />
         {viewMode==='all' && <PostSelector changeTopic={ changeTopic } loadValue={newsTopic}/>}
         {isLoading ? <LoadingComponent /> : posts ? <PostList reloadPosts={reloadPosts} posts={viewMode === 'all' ? posts : favPosts} /> : ""}
+        {(!isLoading && viewMode === 'all') && <Pagination
+          page={paginateData?.page ?? 0}
+          pageCount={paginateData?.nbPages ?? 1}
+          onPageChange={changePage}
+        />}
       </div>
     </div>
   );
